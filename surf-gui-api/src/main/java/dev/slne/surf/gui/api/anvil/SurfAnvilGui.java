@@ -65,7 +65,7 @@ public abstract class SurfAnvilGui extends AnvilGui implements SurfGui {
         getResultComponent().addPane(resultItemPane);
 
         handleInput(getRenameText());
-//        setOnNameInputChanged(this::handleInput);
+        setOnNameInputChanged(this::handleInput);
     }
 
     /**

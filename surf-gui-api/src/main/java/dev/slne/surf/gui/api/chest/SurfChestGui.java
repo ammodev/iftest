@@ -22,7 +22,7 @@ public abstract class SurfChestGui extends ChestGui implements SurfGui {
      * @param parent        the parent gui
      * @param rows          the amount of rows this gui should have
      * @param title         the title of this gui
-     * @param viewingPlayer the player viewing the shop
+     * @param viewingPlayer the player viewing the gui
      */
     protected SurfChestGui(@Nullable SurfGui parent, int rows, @NotNull Component title,
                            @NotNull Player viewingPlayer) {

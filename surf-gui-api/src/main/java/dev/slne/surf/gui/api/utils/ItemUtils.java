@@ -1,5 +1,6 @@
 package dev.slne.surf.gui.api.utils;
 
+import com.github.stefvanschie.inventoryframework.adventuresupport.ComponentHolder;
 import dev.slne.surf.gui.api.SurfGui;
 import dev.slne.surf.gui.api.message.GuiMessageManager;
 import net.kyori.adventure.text.Component;
@@ -137,12 +138,18 @@ public class ItemUtils {
 
         PlainTextComponentSerializer serializer = PlainTextComponentSerializer.plainText();
 
-        parentNames.add(
-                Component.text(String.format(formatterCurrent, reformatString(serializer, gui.getGui().getTitle())),
-                        GuiMessageManager.VARIABLE_VALUE));
+        ComponentHolder mainTitleHolder = (ComponentHolder) gui.getGui().getTitleHolder();
+        String mainTitle = serializer.serialize(mainTitleHolder.getComponent());
+        Component mainName =
+                Component.text(String.format(formatterCurrent, mainTitle), GuiMessageManager.VARIABLE_VALUE);
+        parentNames.add(mainName);
         for (SurfGui parent : parents) {
-            parentNames.add(Component.text(String.format(formatterParent, reformatString(serializer,
-                    parent.getGui().getTitle())), NamedTextColor.GRAY));
+            ComponentHolder parentTitleHolder = (ComponentHolder) parent.getGui().getTitleHolder();
+            String parentTitle = serializer.serialize(parentTitleHolder.getComponent());
+            Component parentName =
+                    Component.text(String.format(formatterParent, parentTitle), GuiMessageManager.SPACER);
+
+            parentNames.add(parentName);
         }
 
         List<Component> lore = new ArrayList<>();
@@ -242,18 +249,6 @@ public class ItemUtils {
         item.setItemMeta(meta);
 
         return item;
-    }
-
-    /**
-     * Reformats the given string to have no color codes
-     *
-     * @param serializer the serializer
-     * @param string     the string
-     *
-     * @return the reformatted string
-     */
-    private static String reformatString(PlainTextComponentSerializer serializer, String string) {
-        return serializer.serialize(Component.text(string));
     }
 
 }
